@@ -15,8 +15,9 @@ def get_addresses(csv_path):
 
 def get_image(add, save_loc):
     base = "https://maps.googleapis.com/maps/api/streetview?size=1200x800&location="
-    url = base + requests.compat.quote_plus(add) + API_KEY #added url encoding
+    url = base + requests.compat.quote_plus(add) + "&key=" + API_KEY #added url encoding
     img_file = add + ".jpg"
+    print(url)
 
     response = requests.get(url, stream=True)
     print(response.status_code)
