@@ -1,2 +1,5 @@
 .env
 env/
+**/.ipynb_checkpoints
+OIDv6-Loader/train-annotations-bbox.csv
+OIDv6-Loader/train-images-boxable.csv
