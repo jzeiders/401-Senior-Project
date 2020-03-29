@@ -6,7 +6,7 @@ import requests
 import pandas as pd
 
 API_KEY = os.environ["API_KEY"]
-SAVE_DIR = "images/"
+SAVE_DIR = "constantinos_images/"
 
 def get_addresses(csv_path):
     df = pd.read_csv(csv_path)
@@ -31,7 +31,7 @@ def filter_data(address):
     return isinstance(address, str) and len(address) > 4
 
 def gen_streetview_images():
-    addresses = list(filter(filter_data, get_addresses("addresses.csv")))
+    addresses = list(filter(filter_data, get_addresses("davis_1000_solar_addresses.csv")))
     for address in addresses:
         get_image(address, SAVE_DIR)
 
