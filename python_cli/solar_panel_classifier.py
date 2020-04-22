@@ -88,7 +88,7 @@ def classify(test_files, export, seg_images):
 
     # set up pandas dataframe for storing classification results
     # TODO: Include other metadata we can gather from the model
-    df = pd.DataFrame([], columns=["Image_Path", "HasSolarPanel", "Confidence"])
+    df = pd.DataFrame([], columns=["ImagePath", "HasSolarPanel", "Confidence"])
 
     for image in test_images:
         output = run_classifier(model, image)
@@ -101,16 +101,14 @@ def classify(test_files, export, seg_images):
         export_with_type("CSV", df)
 
 
-
-
 @click.command()
 @click.option("--output_directory", required=True, help="Specify directory to output images", type=click.Path())
-@click.option("--API_key", required=True, help="Specify google API key for Google streetview API")
+@click.option("--api_key", required=True, help="Specify google API key for Google streetview API")
 @click.option("--addresses", required=True, help="Path to address csv. See docs for format", type=click.Path())
-def collect(output_directory, API_key, addresses):
+def collect(output_directory, api_key, addresses):
     address_list = get_addresses(addresses) 
     for add in address_list:
-        get_image(add, output_directory, API_key)
+        get_image(add, output_directory, api_key)
     print("Finished saving images")
 
 
