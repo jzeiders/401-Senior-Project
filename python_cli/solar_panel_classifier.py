@@ -37,6 +37,11 @@ def export_with_type(format_specifier, df):
     """
     return None
 
+
+#
+# Below is the CLI shell to actuate above functionality
+#
+
 @click.command()
 @click.option("--test_files", help="Specifies directory where images to be classified are", type=click.Path())
 @click.option("--export", help="Specifies how to provide results", type=click.Choice(['CSV'], case_sensitive=False))
@@ -64,9 +69,6 @@ def classify_images(test_files, export, seg_images):
 
     if export is None or export == "CSV":
         export_with_type("CSV", df)
-
-
-
 
 
 if __name__ == "__main__":
