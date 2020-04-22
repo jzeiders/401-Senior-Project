@@ -22,6 +22,20 @@ def run_classifier(model, image):
     """
 
     return None
+def write_image_classification(output, df):
+    """
+    This function will append the output of the model to the pandas 
+    dataframe. We can then later serialize the dataframe as having multiple export 
+    options.
+    """
+    return None
+
+def export_with_type(format_specifier, df):
+    """
+    This function takes a string list of export specifiers and attempts to serialize our df into
+    that format. It will default to CSV because I like CSV.
+    """
+    return None
 
 @click.command()
 @click.option("--test_files", help="Specifies directory where images to be classified are", type=click.Path())
@@ -39,14 +53,18 @@ def classify_images(test_files, export, seg_images):
 
     # set up pandas dataframe for storing classification results
     # TODO: Include other metadata we can gather from the model
-    df = pd.Dataframe([], columns = ["Image_Path", "HasSolarPanel", "Confidence"]
+    df = pd.DataFrame([], columns=["Image_Path", "HasSolarPanel", "Confidence"])
 
     for image in test_images:
         output = run_classifier(model, image)
         if seg_images:
             write_image_debuginfo(output)
-        if export is None or export == "CSV":
             # Default is going to be csv because fuck it
+        write_image_classification(output, df)
+
+    if export is None or export == "CSV":
+        export_with_type("CSV", df)
+
 
 
 
