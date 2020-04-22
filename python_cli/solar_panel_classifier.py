@@ -22,7 +22,7 @@ def run_classifier(model, image):
     """
 
     return None
-def write_image_classification(output, df):
+def write_image_classification(output, df: pd.DataFrame):
     """
     This function will append the output of the model to the pandas 
     dataframe. We can then later serialize the dataframe as having multiple export 
@@ -30,7 +30,7 @@ def write_image_classification(output, df):
     """
     return None
 
-def export_with_type(format_specifier, df):
+def export_with_type(format_specifier, df: pd.DataFrame):
     """
     This function takes a string list of export specifiers and attempts to serialize our df into
     that format. It will default to CSV because I like CSV.
