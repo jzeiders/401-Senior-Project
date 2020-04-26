@@ -4,14 +4,37 @@ import requests
 import math
 import shutil
 import os
+import errno
+
+from caffe2.python import core, workspace
 
 
 def load_caffe2_model():
     """
-    Loads the caffe2 model
+    Loads the caffe2 model. The function will load the initial network and
+    weights from the specified folder, initialize the network, and then
+    return a caffe2 predictor.
     """
+    MODEL_LOCATION = "model"
+    INIT_NAME = "init_net.pb"
+    PREDICT_NAME = "predict_net.pb" 
+    init_path = os.path.join(MODEL_LOCATION, INIT_NAME)
+    predict_path = os.path.join(MODEL_LOCATION, PREDICT_NAME)
 
-    return None
+    # Check that files exist
+    if not os.path.exists(init_path):
+        raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), init_path)
+
+    if not os.path.exists(predict_path):
+        raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), predict_path)
+    
+    # initialize the neural net
+    with open(init_path) as f:
+        init_net = f.read()
+    with open(predict_path) as f:
+        predict_net = f.read()
+
+    return workspace.Predictor(init_net, predict_net)
 
 
 def load_test_images(test_file_dir: click.Path):
@@ -24,6 +47,7 @@ def run_classifier(model, image):
     """
     This runs the given model against the specified image
     """
+    results = p.run({'data': img})
 
     return None
 def write_image_classification(output, df: pd.DataFrame):
