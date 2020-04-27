@@ -106,6 +106,12 @@ def solar_panel_cli():
 @click.option("--export", help="Specifies how to provide results", type=click.Choice(['CSV'], case_sensitive=False))
 @click.option("--seg_images", help="Include segmented output images for each input image", default=False)
 def classify(test_files, export, seg_images):
+    """
+    This command takes a directory of images and classifies each image using a caffe2 model. The classification of each image
+    is outputted into a CSV file (future export types can be made available in the future) that has 3 columns for each file: 
+    the image path, a prediction describing whether or not it has a solar panel, and a confidence rating for the 
+    aforementioned prediction.
+    """
     model = load_caffe2_model()
     if model is not None:
         print("Model loaded successfully")
@@ -136,7 +142,7 @@ def classify(test_files, export, seg_images):
 @click.option("--addresses", required=True, help="Path to address csv. See docs for format", type=click.Path())
 def collect(output_directory, api_key, addresses):
 	"""
-	This function takes Google Street View API key and the path to a CSV file with addresses, to retrieve 
+	This command takes a Google Street View API key and the path to a CSV file with addresses, to retrieve 
 	the Google Street View images for the addresses and add them to the given output directory.
 	"""
     address_list = get_addresses(addresses) 
