@@ -60,8 +60,8 @@ def write_image_classification(output, df: pd.DataFrame):
 
 def export_with_type(format_specifier, df: pd.DataFrame):
     """
-    This function takes a string list of export specifiers and attempts to serialize our df into
-    that format. It will default to CSV because I like CSV.
+    This function takes a string list of export specifiers and attempts to serialize our data frame into
+    that format.
     """
     return None
 
@@ -75,6 +75,11 @@ def get_addresses(addresses):
 
 
 def get_image(add, save_loc, API_key):
+	"""
+	This function takes an address, a Google Street View API key, and an output directory, and 
+	retrieves the Google Street View image for the respective address. If the Google Street View 
+	API successfully returned a street view image, then the image is saved to the given directory.
+	"""
     base = "https://maps.googleapis.com/maps/api/streetview?size=1200x800&location="
     url = base + requests.compat.quote_plus(add) + "&key=" + API_key
     img_file = add + ".jpg"
@@ -130,6 +135,10 @@ def classify(test_files, export, seg_images):
 @click.option("--api_key", required=True, help="Specify google API key for Google streetview API")
 @click.option("--addresses", required=True, help="Path to address csv. See docs for format", type=click.Path())
 def collect(output_directory, api_key, addresses):
+	"""
+	This function takes Google Street View API key and the path to a CSV file with addresses, to retrieve 
+	the Google Street View images for the addresses and add them to the given output directory.
+	"""
     address_list = get_addresses(addresses) 
     for add in address_list:
         get_image(add, output_directory, api_key)
